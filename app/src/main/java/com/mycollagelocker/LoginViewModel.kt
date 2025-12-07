@@ -13,7 +13,8 @@ class  LoginViewModel : ViewModel() {
     var password by mutableStateOf("")
         private set
 
-    val role: String = "guard"
+    var selectedRole by mutableStateOf("student")
+        private set
 
 
 
@@ -43,6 +44,9 @@ class  LoginViewModel : ViewModel() {
     }
     fun onPasswordChange(newValue: String) {
         password = newValue
+    }
+    fun updateRole(role: String) {
+        selectedRole = role
     }
 
     }
