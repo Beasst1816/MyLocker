@@ -103,7 +103,7 @@ fun LoginScreen(navController: NavController, viewModel: LoginViewModel = viewMo
                     viewModel.updateRole(selectedRole)
 
                     if (selectedRole == "student") {
-                        navController.navigate(Routes.STUDENT) {
+                        navController.navigate(Routes.STUDENT_DASH) {
                             popUpTo ( Routes.LOGIN ) { inclusive = true }
                         }
                     }

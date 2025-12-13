@@ -74,7 +74,8 @@ fun VirtualIdCard(
 @Composable
 fun PreviewIdScreen(
     data: VirtualIdData,
-    onGenerateImage: () -> Unit
+    onEdit: () -> Unit,
+    onBack: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -85,11 +86,12 @@ fun PreviewIdScreen(
 
         VirtualIdCard(data)
 
-        Button(
-            onClick = onGenerateImage,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Save As Virtual ID")
+        Button(onClick = onEdit) {
+            Text("Edit ID")
+        }
+
+        Button(onClick = onBack) {
+            Text("Back to Dashboard")
         }
     }
 }

@@ -20,84 +20,53 @@ import data.VirtualIdData
 
 @Composable
 fun CreateIdScreen(
+    initialData: VirtualIdData?,
     onSubmit: (VirtualIdData) -> Unit
 ) {
-    var name by remember { mutableStateOf("") }
-    var enrollment by remember { mutableStateOf("") }
-    var cource by remember { mutableStateOf("") }
-    var collegeName by remember { mutableStateOf("") }
-    var admissionYear by remember { mutableStateOf("") }
-
+    var name by remember(initialData) {
+        mutableStateOf(initialData?.name ?: "")
+    }
+    var enrollment by remember(initialData) {
+        mutableStateOf(initialData?.enrollment ?: "")
+    }
+    var cource by remember(initialData) {
+        mutableStateOf(initialData?.cource ?: "")
+    }
+    var college by remember(initialData) {
+        mutableStateOf(initialData?.collage ?: "")
+    }
+    var year by remember(initialData) {
+        mutableStateOf(initialData?.admissionYear ?: "")
+    }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(20.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        TextField(
-            value =  name,
-            onValueChange = { name = it },
-            label = { Text("Name") },
-            modifier = Modifier.fillMaxWidth()
-        )
 
-        TextField(
-            value = enrollment,
-            onValueChange =  { enrollment = it },
-            label = { Text("Enrollment Number") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        TextField(
-            value = cource,
-            onValueChange = { cource = it },
-            label =  { Text("Cource") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        TextField(
-            value = collegeName,
-            onValueChange = { collegeName = it },
-            label = { Text("College Name") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        TextField(
-            value = admissionYear,
-            onValueChange = { admissionYear = it },
-            label = { Text("Admission Year") },
-            modifier = Modifier.fillMaxWidth()
-        )
+        TextField(value = name, onValueChange = { name = it }, label = { Text("Name") })
+        TextField(value = enrollment, onValueChange = { enrollment = it }, label = { Text("Enrollment") })
+        TextField(value = cource, onValueChange = { cource = it }, label = { Text("Course") })
+        TextField(value = college, onValueChange = { college = it }, label = { Text("College") })
+        TextField(value = year, onValueChange = { year = it }, label = { Text("Year") })
 
         Button(
+            modifier = Modifier.fillMaxWidth(),
             onClick = {
-                if (
-                    name.isNotBlank() &&
-                    enrollment.isNotBlank() &&
-                    cource.isNotBlank() &&
-                    collegeName.isNotBlank() &&
-                    admissionYear.isNotBlank()
-                ) {
-                    onSubmit(
-                        VirtualIdData(
-                            name = name,
-                            enrollment = enrollment,
-                            cource = cource,
-                            collage = collegeName,
-                            admissionYear = admissionYear
-                        )
+                onSubmit(
+                    VirtualIdData(
+                        name = name,
+                        enrollment = enrollment,
+                        cource = cource,
+                        collage = college,
+                        admissionYear = year
                     )
-                }
-            },
-            modifier = Modifier.fillMaxWidth()
+                )
+            }
         ) {
-            Text("Genrate Virtual ID")
+            Text("Generate Virtual ID")
         }
     }
 }
-
-
-
-
-

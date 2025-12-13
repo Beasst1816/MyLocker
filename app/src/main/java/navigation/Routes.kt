@@ -5,11 +5,12 @@ import java.security.Guard
 
 object Routes {
     const val LOGIN = "login"
-    const val STUDENT = "student_dashboard"
+    const val STUDENT_DASH = "student_dashboard"
+    const val STUDENT_ID = "idMainScreen"
     const val GUARD = "guard_dashboard"
 
-    const val CREATE_VIRTUAL_ID = "createVirtualId"
 
-    const val PREVIEW_VIRTUAL_ID = "previewVirtualId"
+
+
 
 }

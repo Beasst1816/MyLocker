@@ -6,19 +6,30 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import data.VirtualIdData
 
-data class VirtualIdData(
-    val name: String = "",
-    val enrollment: String = "",
-    val Cource: String = "",
-    val admissionYear: String = "",
-    val college: String = ""
-)
+
+enum class IdUiMode {
+    CREATE,
+    VIEW,
+    EDIT
+}
 
 class StudentIdViewModel : ViewModel() {
-    var idData by mutableStateOf(VirtualIdData())
+    var idData by mutableStateOf<VirtualIdData?>(null)
+        private set
+
+    var uiMode by mutableStateOf(IdUiMode.CREATE)
         private set
 
     fun saveId(data: VirtualIdData) {
         idData = data
+        uiMode = IdUiMode.VIEW
+    }
+
+    fun startEdit() {
+        uiMode = IdUiMode.EDIT
+    }
+
+    fun cancelEdit() {
+        uiMode = IdUiMode.VIEW
     }
 }
