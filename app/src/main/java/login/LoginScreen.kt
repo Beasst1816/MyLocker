@@ -29,15 +29,16 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.mycollagelocker.ui.theme.MYCOLLAGELOCKERTheme
 import navigation.Routes
+import student.StudentIdViewModel
 
 
 @Composable
-fun LoginScreen(navController: NavController, viewModel: LoginViewModel = viewModel() ) {
+fun LoginScreen(
+    navController: NavController,
+    viewModel: LoginViewModel
 
-
+) {
     val context = LocalContext.current
-    val selectedRole = viewModel.selectedRole
-
 
     Column(
         modifier = Modifier
@@ -81,7 +82,7 @@ fun LoginScreen(navController: NavController, viewModel: LoginViewModel = viewMo
             Row {
 
                 RadioButton(
-                    selected = selectedRole == "student",
+                    selected = viewModel.selectedRole == "student",
                     onClick = { viewModel.updateRole("student") }
                 )
                 Text("student")
@@ -89,7 +90,7 @@ fun LoginScreen(navController: NavController, viewModel: LoginViewModel = viewMo
 
             Row {
                 RadioButton(
-                    selected = selectedRole == "guard",
+                    selected = viewModel.selectedRole == "guard",
                     onClick = {viewModel.updateRole("guard") }
                 )
                 Text("guard")
@@ -100,9 +101,9 @@ fun LoginScreen(navController: NavController, viewModel: LoginViewModel = viewMo
         Button(
             onClick = {
                 if (viewModel.login()) {
-                    viewModel.updateRole(selectedRole)
+                    viewModel.saveLogin()
 
-                    if (selectedRole == "student") {
+                    if (viewModel.selectedRole == "student") {
                         navController.navigate(Routes.STUDENT_DASH) {
                             popUpTo ( Routes.LOGIN ) { inclusive = true }
                         }
@@ -131,10 +132,3 @@ fun LoginScreen(navController: NavController, viewModel: LoginViewModel = viewMo
 }
 
 
-@Preview(showBackground = true)
-@Composable
-fun LoginScreenTextPreview() {
-    MYCOLLAGELOCKERTheme {
-        LoginScreen( navController = rememberNavController() )
-    }
-}

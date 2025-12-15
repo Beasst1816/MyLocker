@@ -4,8 +4,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import datastore.AppPreferenceManager
+import kotlinx.coroutines.launch
 
-class  LoginViewModel : ViewModel() {
+class  LoginViewModel(
+    private val prefs: AppPreferenceManager
+) : ViewModel() {
     var fullName by mutableStateOf("")
         private set
     var email by mutableStateOf("")
@@ -27,12 +32,24 @@ class  LoginViewModel : ViewModel() {
     }
 
 
-    fun login() : Boolean {
-        if (validateInput()) {
-            return true
-        }else {
-            return false
+//    fun login(role: String, onSuccess: () -> Unit) {
+//        viewModelScope.launch {
+//            prefs.saveLogin(role)
+//            onSuccess()
+//        }
+//    }
 
+    fun login(): Boolean {
+        return fullName.isNotBlank() &&
+                email.isNotBlank() &&
+                password.isNotBlank() &&
+                selectedRole.isNotBlank()
+    }
+
+
+    fun saveLogin() {
+        viewModelScope.launch {
+            prefs.saveLogin(selectedRole)
         }
     }
 

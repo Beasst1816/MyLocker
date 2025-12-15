@@ -9,9 +9,15 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import datastore.AppPreferenceManager
+import kotlinx.coroutines.launch
 import navigation.Routes
 
 
@@ -23,6 +29,15 @@ fun StudentDashboardScreen(
     navController: NavController,
     viewModel: StudentIdViewModel
 ) {
+    val scope = rememberCoroutineScope ()
+
+    val context = LocalContext.current
+    val prefs = remember { AppPreferenceManager(context) }
+
+    LaunchedEffect(Unit) {
+        viewModel.loadId()
+    }
+
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp)) {
         Text("Student Dashboard", style = MaterialTheme.typography.headlineMedium)
@@ -38,12 +53,11 @@ fun StudentDashboardScreen(
         }) { Text("Virtual ID Card") }
 
         Button(onClick = {
-            navController.navigate(Routes.STUDENT_ID)
-        }) { Text("Edit Virtual ID") }
-
-        Button(onClick = {
-            navController.navigate(Routes.LOGIN) {
-                popUpTo(Routes.LOGIN) { inclusive = true }
+            scope.launch {
+                prefs.logout()
+                navController.navigate(Routes.LOGIN) {
+                    popUpTo (0)
+                }
             }
         } ) { Text("Logout") }
     }

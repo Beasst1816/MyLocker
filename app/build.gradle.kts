@@ -55,6 +55,7 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:<latest-version>")
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.navigation.runtime.ktx)
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
